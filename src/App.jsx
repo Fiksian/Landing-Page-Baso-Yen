@@ -1,5 +1,5 @@
 import {} from 'react'
-import './styles/App.css'
+import './styles/App.scss'
 
 function App() {
 
