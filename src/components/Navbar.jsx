@@ -3,20 +3,22 @@ import logo from "../assets/Photo/Logo Yen/LOGO YEN.png"
 
 function Navbars() {
   return (
-    <Navbar fixed="top" expand="xl" bg="dark" variant="dark">
-      <Container className="justify-content-start ms-5 me-5"  style={{ maxWidth: '1920px'}}>
+    <Navbar expand="xl" bg="success" variant="dark">
+      <Container className="justify-content-start ms-5 me-5"  style={{ maxWidth: '100%'}}>
         <Navbar.Brand href="#home">
-          <Image src={logo} style={{ height: "100%", maxHeight: "70px" }} />
+          <Image src={logo} style={{ width:"100%", height: "100%", maxHeight: "80px", objectFit: "cover", }}  />
         </Navbar.Brand>
         <Navbar.Text>
           <Col>
-             Baso Yen
+              Baso Yen
           </Col>
           <Col>
-             Sajian Praktis Istimewa
+              Sajian Praktis Istimewa
           </Col>
         </Navbar.Text>
-        <Navbar.Toggle aria-controls="main-navbar-nav" />
+
+        {/* 👇 Tambahkan ms-auto di sini dan hapus me-5 */}
+        <Navbar.Toggle aria-controls="main-navbar-nav" className="ms-auto" />
 
         <Navbar.Collapse id="main-navbar-nav">
           <Nav className="ms-auto gap-5">
