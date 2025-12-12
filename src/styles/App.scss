@@ -1,1 +1,6 @@
 @use 'bootstrap/scss/bootstrap';
+
+.hero-img {
+  height: 70vh;        /* Adjust slider height responsively */
+  object-fit: cover;    /* Ensures image fills area without distortion */
+}
