@@ -30,7 +30,7 @@ const AboutUs = () => {
     ];
 
     return (
-        <section id="about-us" style={{ backgroundColor: "#fff" }}>
+        <section id="tentang_Kami" style={{ backgroundColor: "#fff" }}>
 
             {/* Background Section */}
             <div

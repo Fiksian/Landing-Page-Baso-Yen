@@ -3,7 +3,7 @@ import logo from "../assets/Photo/Logo Yen/LOGO YEN.png"
 
 function Navbars() {
   return (
-    <Navbar expand="xl" bg="success" variant="dark">
+    <Navbar sticky="top" expand="xl" bg="success" variant="dark">
       <Container className="justify-content-start ms-5 me-5"  style={{ maxWidth: '100%'}}>
         <Navbar.Brand href="#home">
           <Image src={logo} style={{ width:"100%", height: "100%", maxHeight: "80px", objectFit: "cover", }}  />

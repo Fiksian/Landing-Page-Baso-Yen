@@ -4,6 +4,7 @@ import gambar1 from '../assets/Photo/foto baru/Salinan R 11.jpg';
 
 function Hero() {
   return (
+    <section id="home">
     <Carousel>
       <Carousel.Item>
         <Image 
@@ -44,6 +45,7 @@ function Hero() {
         </Carousel.Caption>
       </Carousel.Item>
     </Carousel>
+    </section>
   );
 }
 
