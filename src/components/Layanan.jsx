@@ -5,13 +5,19 @@ import {
   Sliders,
   Tag,
   Box,
-  ShieldCheck,
-  FileCheck,
-  CheckCircle
+  CheckCircle,
+  // Ikon Lucide yang tidak digunakan untuk logo sertifikasi akan tetap ada
 } from "lucide-react";
 
+import logoMui from "../assets/logo-mui-ver-2-2.png"; 
+import logoBpom from "../assets/logo-bpom.png";
+import logoHaccp from "../assets/logo-haccp.png";
+
+import { ShieldCheck } from "lucide-react";
+
+
 /* =======================
-   DATA LAYANAN B2B
+    DATA LAYANAN B2B (Tidak Berubah)
 ======================= */
 const services = [
   {
@@ -42,7 +48,7 @@ const services = [
 ];
 
 /* =======================
-   DATA SERTIFIKASI
+    DATA SERTIFIKASI (Tidak Berubah)
 ======================= */
 const halalCertificates = [
   {
@@ -79,9 +85,7 @@ const Layanan = () => {
     <section id="layanan" className="py-5 bg-light">
       <Container>
 
-        {/* =======================
-            LAYANAN B2B
-        ======================= */}
+        {/* ... LAYANAN B2B ... */}
         <div className="text-center mb-5">
           <h2 className="fw-bold">Layanan Bisnis</h2>
           <p className="text-muted fs-5">
@@ -115,11 +119,15 @@ const Layanan = () => {
           </p>
         </div>
 
-        {/* HALAL */}
         <Card className="mb-4 shadow-sm">
           <Card.Body>
             <h4 className="fw-bold mb-3 d-flex align-items-center">
-              <ShieldCheck className="text-success me-2" size={28} />
+              <img 
+                src={logoMui} 
+                alt="Logo Halal MUI" 
+                style={{ height: '30px', width: 'auto' }} 
+                className="me-2"
+              />
               Sertifikat Halal MUI (100% Halal)
             </h4>
 
@@ -139,11 +147,15 @@ const Layanan = () => {
           </Card.Body>
         </Card>
 
-        {/* BPOM */}
         <Card className="mb-4 shadow-sm">
           <Card.Body>
             <h4 className="fw-bold mb-3 d-flex align-items-center">
-              <FileCheck className="text-primary me-2" size={28} />
+              <img 
+                src={logoBpom} 
+                alt="Logo BPOM RI" 
+                style={{ height: '30px', width: 'auto' }} 
+                className="me-2"
+              />
               Sertifikat BPOM RI
             </h4>
 
@@ -163,11 +175,15 @@ const Layanan = () => {
           </Card.Body>
         </Card>
 
-        {/* HACCP */}
         <Card className="shadow-sm">
           <Card.Body>
             <h4 className="fw-bold mb-3 d-flex align-items-center">
-              <ShieldCheck className="text-warning me-2" size={28} />
+              <img 
+                src={logoHaccp} 
+                alt="Logo HACCP" 
+                style={{ height: '30px', width: 'auto' }} 
+                className="me-2"
+              />
               Sertifikasi HACCP
             </h4>
 

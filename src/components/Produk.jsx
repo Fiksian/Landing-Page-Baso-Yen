@@ -1,4 +1,6 @@
- import { Container, Row, Col, Card, Badge, Button } from "react-bootstrap";
+import { Container, Row, Col, Card, Badge, Button } from "react-bootstrap";
+// Pastikan Anda mengimpor file CSS di file root (misalnya App.js) atau di sini 
+// jika Anda menggunakan bundler yang mendukungnya.
 
 // import bakso from "../assets/bakso.jpg";
 // import mie from "../assets/mie.jpg";
@@ -6,7 +8,7 @@
 // import pangsit from "../assets/pangsit.jpg";
 
 /* =======================
-   DATA PRODUK
+    DATA PRODUK
 ======================= */
 const featuredProducts = [
   {
@@ -37,25 +39,33 @@ const Produk = () => {
   return (
     <section id="produk" className="py-5 bg-white">
       <Container>
-        {/* =======================
-            PRODUK UNGGULAN
-        ======================= */}
-        <div className="text-center mb-4">
+        {/* ... Header ... */}
+        <div className="text-center mb-5">
           <h2 className="fw-bold">Produk Unggulan</h2>
           <p className="text-muted fs-5">
             Produk berkualitas tinggi untuk menunjang operasional dapur profesional
           </p>
         </div>
 
-        <Row className="g-4">
+        {/* TATA LETAK 2X2 */}
+        <Row className="g-4 justify-content-center">
           {featuredProducts.map((product, idx) => (
-            <Col md={6} lg={4} key={idx}>
-              <Card className="h-100 shadow-sm border-0">
-                <Card.Img
-                  variant="top"
-                //   src={product.image}
+            <Col xs={12} md={6} key={idx}>
+              {/* === TAMBAHKAN KELAS product-card DI SINI === */}
+              <Card className="h-100 shadow-sm border-0 product-card"> 
+                {/* Placeholder Image */}
+                <div
+                  className="bg-light d-flex align-items-center justify-content-center"
                   style={{ height: "220px", objectFit: "cover" }}
-                />
+                >
+                  {product.badge && (
+                    <Badge pill bg="warning" className="position-absolute top-0 start-0 m-2">
+                      {product.badge}
+                    </Badge>
+                  )}
+                  <span className="text-muted">Placeholder Gambar</span>
+                </div>
+                
                 <Card.Body>
                   <Card.Title className="fw-bold">
                     {product.name}

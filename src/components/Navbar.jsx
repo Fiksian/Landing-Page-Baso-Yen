@@ -3,25 +3,24 @@ import logo from "../assets/Photo/Logo Yen/LOGO YEN.png"
 
 function Navbars() {
   return (
-    <Navbar sticky="top" expand="xl" bg="success" variant="dark">
-      <Container className="justify-content-start ms-5 me-5"  style={{ maxWidth: '100%'}}>
-        <Navbar.Brand href="#home">
-          <Image src={logo} style={{ width:"100%", height: "100%", maxHeight: "80px", objectFit: "cover", }}  />
+    <Navbar sticky="top" expand="xl" className="navbar-yen">
+      <Container style={{ maxWidth: '100%'}}>
+        
+        <Navbar.Brand href="#home" className="d-flex align-items-center me-4"> 
+          <Image 
+            src={logo} 
+            style={{ height: "50px", objectFit: "cover", marginRight: "10px" }} 
+          />
+          <div className="d-flex flex-column lh-1">
+            <span className="fw-bold" style={{ fontSize: '1.2rem' }}>Baso Yen</span>
+            <span style={{ fontSize: '0.8rem', opacity: 0.8 }}>Sajian Praktis Istimewa</span>
+          </div>
         </Navbar.Brand>
-        <Navbar.Text>
-          <Col>
-              Baso Yen
-          </Col>
-          <Col>
-              Sajian Praktis Istimewa
-          </Col>
-        </Navbar.Text>
-
-        {/* 👇 Tambahkan ms-auto di sini dan hapus me-5 */}
+        
         <Navbar.Toggle aria-controls="main-navbar-nav" className="ms-auto" />
 
         <Navbar.Collapse id="main-navbar-nav">
-          <Nav className="ms-auto gap-5">
+          <Nav className="ms-auto gap-5 nav-link-yen">
             <Nav.Link href="#home">Beranda</Nav.Link>
             <Nav.Link href="#tentang_Kami">Tentang Kami</Nav.Link>
             <Nav.Link href="#layanan">Layanan</Nav.Link>
@@ -33,4 +32,4 @@ function Navbars() {
     </Navbar>
   );
 }
-export default Navbars
+export default Navbars;

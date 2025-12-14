@@ -109,7 +109,6 @@ const Kontak = () => {
                       <option>Hotel</option>
                       <option>Kafe</option>
                       <option>Catering</option>
-                      <option>Distributor</option>
                       <option>Lainnya</option>
                     </Form.Select>
                   </Form.Group>

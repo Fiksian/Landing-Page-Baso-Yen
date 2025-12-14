@@ -4,3 +4,154 @@
   height: 70vh;        /* Adjust slider height responsively */
   object-fit: cover;    /* Ensures image fills area without distortion */
 }
+
+/* Di file styles.css Anda */
+
+.product-card {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.product-card:hover {
+  /* Sedikit memperbesar kartu */
+  transform: scale(1.03);
+  /* Bayangan yang lebih menonjol */
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+}
+/* =======================
+   ANIMASI LOGO KLIEN
+   ======================= */
+
+.client-logo-wrapper {
+  transition: all 0.5s ease-in-out; 
+  cursor: pointer;
+}
+
+.client-logo {
+  filter: grayscale(100%);
+  transition: filter 0.5s ease-in-out, transform 0.3s ease-in-out;
+  max-height: 80px; 
+  object-fit: contain;
+  opacity: 0.8;
+}
+
+.client-logo-wrapper:hover .client-logo {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* =======================
+   STYLING & ANIMASI FOOTER
+   ======================= */
+
+/* Latar belakang oranye utama */
+.footer-yen {
+    background-color: #FF7F00; /* Warna oranye Baso Yen */
+    color: #333; /* Warna teks gelap */
+}
+
+/* Garis pembatas di bawah */
+.footer-yen .footer-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Judul kolom */
+.footer-yen .footer-title {
+    color: #fff; /* Judul berwarna putih agar kontras */
+}
+
+/* Gaya kartu lokasi toko (Meatball Factory & Yen Factory) */
+.store-card {
+    background-color: rgba(255, 255, 255, 0.2); /* Latar belakang putih transparan */
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    color: #333; /* Teks harus gelap di atas background transparan */
+}
+
+/* Gaya ikon media sosial */
+.social-icon-wrapper {
+    width: 36px; 
+    height: 36px; 
+    border-radius: 50%; 
+    background-color: #fff; /* Latar belakang ikon putih */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Animasi */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.social-icon-wrapper svg {
+    color: #FF7F00;
+}
+
+.social-icon-wrapper:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Gaya kartu marketplace (Shopee & Tokopedia) */
+.marketplace-card {
+    background-color: #fff; 
+    padding: 0.75rem; 
+    border-radius: 0.5rem; 
+    margin-bottom: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    color: #333;
+
+    /* Animasi */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.marketplace-card:hover {
+    transform: scale(1.02); 
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); 
+}
+
+/* Gaya link di bagian copyright */
+.footer-yen a {
+    color: #333; 
+}
+
+/* =======================
+   STYLING NAVBAR YEN (Warna Oranye)
+   ======================= */
+
+.navbar-yen {
+    background-color: #FF7F00 !important; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Warna teks default untuk Navbar.Brand dan Navbar.Text */
+.navbar-yen .navbar-brand,
+.navbar-yen .navbar-text,
+.navbar-yen .navbar-text span {
+    color: #333 !important;
+}
+
+/* Warna link navigasi */
+.navbar-yen .nav-link-yen .nav-link {
+    color: #333 !important; 
+    font-weight: 600; 
+    transition: color 0.2s ease-in-out;
+}
+
+/* Efek hover pada link navigasi */
+.navbar-yen .nav-link-yen .nav-link:hover {
+    color: #fff !important; 
+}
+
+/* Warna ikon toggle menu (hamburger) */
+.navbar-yen .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(51, 51, 51, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* Warna border toggle */
+.navbar-yen .navbar-toggler {
+    border-color: rgba(51, 51, 51, 0.5) !important;
+}

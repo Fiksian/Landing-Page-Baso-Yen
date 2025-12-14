@@ -1,6 +1,6 @@
 import Carousel from 'react-bootstrap/Carousel';
 import Image from 'react-bootstrap/Image';
-import gambar1 from '../assets/Photo/foto baru/Salinan R 11.jpg';
+import gambar1 from '../assets/Photo/foto baru/foto_Salinan R 11.jpg';
 
 function Hero() {
   return (
