@@ -155,3 +155,17 @@
 .navbar-yen .navbar-toggler {
     border-color: rgba(51, 51, 51, 0.5) !important;
 }
+
+.allproduk-button {
+    background-color: #FF7F00 !important;
+    color: #333;
+    font-weight: 600; 
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out, color 0.3s ease-in-out; 
+}
+
+
+.allproduk-button:hover {
+    transform: scale(1.03); 
+    color: #FFFFFF !important; 
+    background-color: #E67300 !important; /* Contoh: Sedikit lebih gelap dari warna asli */
+}

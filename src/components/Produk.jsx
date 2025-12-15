@@ -1,12 +1,5 @@
-import { Container, Row, Col, Card, Badge, Button } from "react-bootstrap";
-// Pastikan Anda mengimpor file CSS di file root (misalnya App.js) atau di sini 
-// jika Anda menggunakan bundler yang mendukungnya.
-
-// import bakso from "../assets/bakso.jpg";
-// import mie from "../assets/mie.jpg";
-// import sosis from "../assets/sosis.jpg";
-// import pangsit from "../assets/pangsit.jpg";
-
+import { Container, Row, Col, Card, Badge, Button} from "react-bootstrap";
+import { Link } from 'react-router-dom';
 /* =======================
     DATA PRODUK
 ======================= */
@@ -80,11 +73,11 @@ const Produk = () => {
         </Row>
 
         {/* CTA */}
-        <div className="text-center mt-5">
-          <Button variant="primary" size="lg">
-            Lihat Katalog Produk
-          </Button>
-        </div>
+        <Link to="/products">
+            <Button className="allproduk-button mt-4" size="lg">
+                Tampilkan Semua Produk
+            </Button>
+        </Link>
 
       </Container>
     </section>

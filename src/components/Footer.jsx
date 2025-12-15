@@ -5,7 +5,29 @@ import shopeeLogo from '../assets/Photo/Shopee.png';
 import tokopediaLogo from '../assets/Photo/tokopedia.png';
 
 function AppFooter() {
-  
+const socialLinks = [
+    { 
+        Icon: FaFacebook, 
+        url: "https://www.facebook.com/basososisyen/",
+        name: "Facebook"
+    },
+    { 
+        Icon: FaInstagram, 
+        url: "https://www.instagram.com/basoyen/",
+        name: "Instagram"
+    },
+    { 
+        Icon: FaTiktok, 
+        url: "https://www.tiktok.com/@miebasoyen",
+        name: "TikTok"
+    },
+    { 
+        Icon: FaYoutube, 
+        url: "https://www.youtube.com/channel/UCQLcnQA2X6I8kZGCGzVN5Fg",
+        name: "YouTube"
+    }
+];
+
   return (
     <footer className="py-5 footer-yen">
       <Container>
@@ -33,18 +55,26 @@ function AppFooter() {
 
           {/* Kolom 2: KONTAK KAMI & IKUTI KAMI */}
           <Col xs={12} md={4} lg={3}>
-            <h5 className="fw-bold mb-3">Kontak Kami</h5>
-            <p className="mb-1"><FaPhoneAlt className="me-2" /> 0812-3456-7890</p>
-            <p className="mb-1"><FaPhoneAlt className="me-2" /> 0812-3456-7890</p>
-            <h5 className="fw-bold mb-3">Ikuti Kami</h5>
-            <div className="d-flex gap-2 mb-4">
-              {[FaFacebook, FaInstagram, FaTiktok, FaYoutube].map((Icon, idx) => (
-                <div key={idx} className="social-icon-wrapper">
-                  <Icon size={18} />
+                <h5 className="fw-bold mb-3">Kontak Kami</h5>
+                <p className="mb-1"><FaPhoneAlt className="me-2" /> 0897-2078-800 (Pasirkaliki)</p>
+                <p className="mb-1"><FaPhoneAlt className="me-2" /> 0851-0080-5080 (BKR)</p>
+                
+                <h5 className="fw-bold mb-3">Ikuti Kami</h5>
+                <div className="d-flex gap-2 mb-4">
+                    {socialLinks.map((item, idx) => (
+                        <a 
+                            key={idx} 
+                            href={item.url} 
+                            target="_blank"
+                            rel="noopener noreferrer" 
+                            className="social-icon-wrapper text-decoration-none"
+                            aria-label={`Kunjungi ${item.name} Baso Yen`}
+                        >
+                            <item.Icon size={18} />
+                        </a>
+                    ))}
                 </div>
-              ))}
-            </div>
-          </Col>
+            </Col>
 
           {/* Kolom 3: LOKASI TOKO */}
           <Col xs={12} md={4} lg={3}>
@@ -73,7 +103,7 @@ function AppFooter() {
             </p>
 
             {/* Shopee */}
-            <a href="#" target="_blank" rel="noopener noreferrer" className="text-decoration-none">
+            <a href="https://shopee.co.id/miebasososisyen" target="_blank" rel="noopener noreferrer" className="text-decoration-none">
               <div className="d-flex align-items-center gap-2 marketplace-card">
                 <img src={shopeeLogo} width="25" alt="Shopee" />
                 <div className="flex-grow-1">Shopee Official Store</div>
@@ -82,7 +112,7 @@ function AppFooter() {
             </a>
             
             {/* Tokopedia */}
-            <a href="#" target="_blank" rel="noopener noreferrer" className="text-decoration-none">
+            <a href="https://www.tokopedia.com/baso-yen" target="_blank" rel="noopener noreferrer" className="text-decoration-none">
               <div className="d-flex align-items-center gap-2 marketplace-card">
                 <img src={tokopediaLogo} width="25" alt="Tokopedia" />
                 <div className="flex-grow-1">Tokopedia Official Store</div>
