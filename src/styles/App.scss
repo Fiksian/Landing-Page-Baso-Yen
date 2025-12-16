@@ -1,11 +1,24 @@
 @use 'bootstrap/scss/bootstrap';
 
 .hero-img {
-  height: 70vh;        /* Adjust slider height responsively */
-  object-fit: cover;    /* Ensures image fills area without distortion */
+  height: 70vh;
+  object-fit: cover;    
+  filter: brightness(60%)
+
 }
 
-/* Di file styles.css Anda */
+#home .carousel, 
+#home .carousel-inner, 
+#home .carousel-item {
+    height: 70vh;
+}
+
+.carousel-caption {
+    bottom: 50%; 
+    transform: translateY(50%);
+    color: white; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); 
+}
 
 .product-card {
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;

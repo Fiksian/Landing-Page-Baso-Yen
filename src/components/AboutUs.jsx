@@ -1,9 +1,9 @@
 import { ChefHat, Award, Clock, BookOpen, Target, Eye, CheckCircle } from 'lucide-react';
 import { Container, Row, Col, Card } from "react-bootstrap";
 
-// import bgtoko from "../assets/background_toko_basoyen.jfif";
-// import fotomangkok from "../assets/foto_mangkok.jpg";
-// import packbaso from "../assets/packbaso.jpg";
+import bgtoko from "../assets/Photo/Foto Store Baso Yen/20251212_100320.jpg";
+import fotomangkok from "../assets/Photo/foto baru/foto_DSCF9943.jpg";
+import packbaso from "../assets/Photo/foto baru/foto_DSCF9876.jpg";
 
 const AboutUs = () => {
     const values = [
@@ -35,10 +35,10 @@ const AboutUs = () => {
             {/* Background Section */}
             <div
                 style={{
-                    // backgroundImage: `url(${bgtoko})`,
+                    backgroundImage: `url(${bgtoko})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
-                    minHeight: "100vh",
+                    minHeight: "65vh",
                     position: "relative",
                     display: "flex",
                     alignItems: "center"
@@ -119,7 +119,7 @@ const AboutUs = () => {
                     {/* Image */}
                     <Col md={6} className="text-center">
                         <img
-                            // src={fotomangkok}
+                            src={fotomangkok}
                             alt="Food preparation"
                             className="img-fluid rounded shadow-lg"
                             style={{ maxWidth: "380px", objectFit: "cover" }}
@@ -160,7 +160,7 @@ const AboutUs = () => {
                 <Row className="align-items-center">
                     <Col md={6} className="text-center mb-4">
                         <img
-                            // src={packbaso}
+                            src={packbaso}
                             alt="produk baso"
                             className="img-fluid rounded shadow-lg"
                             style={{ maxWidth: "380px" }}
