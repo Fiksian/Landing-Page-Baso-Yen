@@ -1,15 +1,23 @@
 const express = require('express');
 const cors = require('cors');
-const mysql = require('mysql2/promise'); // Menggunakan mysql2 dengan promises
-require('dotenv').config(); // Untuk memuat variabel dari .env
+const mysql = require('mysql2/promise');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+require('dotenv').config();
 
-// Inisialisasi aplikasi Express
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // ======================================
-// 1. SETUP MIDDLEWARE
+// 1. SETUP MIDDLEWARE & UPLOADS
 // ======================================
+
+// Pastikan folder uploads tersedia secara fisik
+const uploadPath = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadPath)) {
+    fs.mkdirSync(uploadPath);
+}
 
 const allowedOrigins = [
     'http://localhost:5173',
@@ -20,30 +28,26 @@ const allowedOrigins = [
 
 app.use(cors({
     origin: function (origin, callback) {
-        // Izinkan permintaan tanpa origin (seperti aplikasi mobile, atau permintaan yang sama asalnya)
         if (!origin) return callback(null, true); 
-        
         if (allowedOrigins.indexOf(origin) === -1) {
-            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-            // callback(new Error(msg), false); // Opsional: mengembalikan error
             callback(null, false);
         } else {
             callback(null, true);
         }
     },
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Pastikan POST diizinkan
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
-    optionsSuccessStatus: 204 // Status yang diharapkan untuk preflight OPTIONS request
+    optionsSuccessStatus: 204
 }));
 
-// Middleware untuk parsing JSON body
 app.use(express.json());
+// Membuat folder uploads dapat diakses via URL (e.g. localhost:5000/uploads/file.jpg)
+app.use('/uploads', express.static(uploadPath));
 
 // ======================================
 // 2. KONEKSI DATABASE
 // ======================================
 
-// Buat pool koneksi database
 const pool = mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -54,7 +58,6 @@ const pool = mysql.createPool({
     queueLimit: 0
 });
 
-// Tes koneksi database
 pool.getConnection()
     .then(connection => {
         console.log('✅ Koneksi database MySQL berhasil!');
@@ -62,14 +65,114 @@ pool.getConnection()
     })
     .catch(err => {
         console.error('❌ Gagal koneksi ke database:', err.message);
-        // Hentikan aplikasi jika koneksi database gagal
         process.exit(1); 
     });
 
+// ======================================
+// 3. KONFIGURASI MULTER
+// ======================================
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        // Nama file unik: timestamp-namafileasli
+        cb(null, Date.now() + '-' + file.originalname.replace(/\s/g, '_'));
+    }
+});
+
+const upload = multer({ 
+    storage: storage,
+    limits: { fileSize: 10 * 1024 * 1024 }, // Batas 10MB
+    fileFilter: (req, file, cb) => {
+        const filetypes = /jpeg|jpg|png|webp|gif/;
+        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+        const mimetype = filetypes.test(file.mimetype);
+        if (mimetype && extname) return cb(null, true);
+        cb(new Error("Hanya file gambar (JPG, PNG, WEBP) yang diizinkan!"));
+    }
+});
 
 // ======================================
-// 3. ENDPOINT API
+// 4. API PRODUK (DENGAN MULTER)
 // ======================================
+
+// GET: Ambil semua produk (Public)
+app.get('/api/public/products', async (req, res) => {
+    try {
+        const [rows] = await pool.query('SELECT * FROM products ORDER BY id DESC');
+        res.json(rows);
+    } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// POST: Tambah Produk Baru
+app.post('/api/products', (req, res) => {
+    upload.single('image')(req, res, async (err) => {
+        if (err) return res.status(400).json({ success: false, message: err.message });
+
+        try {
+            const { name, description, price, original_price, discount } = req.body;
+            const image_url = req.file ? `http://localhost:5000/uploads/${req.file.filename}` : null;
+
+            const [result] = await pool.query(
+                'INSERT INTO products (name, description, price, original_price, discount, image_url) VALUES (?, ?, ?, ?, ?, ?)',
+                [name, description, price, original_price, discount, image_url]
+            );
+            res.status(201).json({ success: true, id: result.insertId });
+        } catch (dbErr) {
+            res.status(500).json({ success: false, message: dbErr.message });
+        }
+    });
+});
+
+// PUT: Update Produk & Hapus Gambar Lama jika ada yang baru
+app.put('/api/products/:id', (req, res) => {
+    upload.single('image')(req, res, async (err) => {
+        if (err) return res.status(400).json({ success: false, message: err.message });
+
+        try {
+            const { id } = req.params;
+            const { name, description, price, original_price, discount } = req.body;
+
+            const [rows] = await pool.query('SELECT image_url FROM products WHERE id = ?', [id]);
+            let current_image = rows[0]?.image_url;
+
+            if (req.file) {
+                // Jika user upload gambar baru, hapus gambar lama dari folder
+                if (current_image) {
+                    const oldFileName = current_image.split('/').pop();
+                    const oldPath = path.join(uploadPath, oldFileName);
+                    if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+                }
+                current_image = `http://localhost:5000/uploads/${req.file.filename}`;
+            }
+
+            await pool.query(
+                'UPDATE products SET name=?, description=?, price=?, original_price=?, discount=?, image_url=? WHERE id=?',
+                [name, description, price, original_price, discount, current_image, id]
+            );
+            res.json({ success: true, message: 'Produk berhasil diperbarui' });
+        } catch (error) { res.status(500).json({ error: error.message }); }
+    });
+});
+
+// DELETE: Hapus Produk & File Gambarnya
+app.delete('/api/products/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const [rows] = await pool.query('SELECT image_url FROM products WHERE id = ?', [id]);
+        
+        if (rows.length > 0 && rows[0].image_url) {
+            const fileName = rows[0].image_url.split('/').pop();
+            const filePath = path.join(uploadPath, fileName);
+            if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+        }
+
+        await pool.query('DELETE FROM products WHERE id = ?', [id]);
+        res.json({ success: true, message: 'Produk dihapus' });
+    } catch (err) { res.status(500).json({ error: err.message }); }
+});
 
 // Endpoint untuk menerima data dari formulir Kontak B2B
 app.post('/api/b2b-request', async (req, res) => {
@@ -190,17 +293,43 @@ app.put('/api/b2b-data/:id', async (req, res) => {
     }
 });
 
-// Endpoint default
+// Endpoint untuk menghapus data B2B berdasarkan ID
+app.delete('/api/b2b-data/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const [result] = await pool.query('DELETE FROM permintaan_b2b WHERE id = ?', [id]);
+        
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ success: false, message: 'Data tidak ditemukan.' });
+        }
+        
+        res.json({ success: true, message: `Data ID ${id} berhasil dihapus.` });
+    } catch (error) {
+        console.error('Gagal menghapus data B2B:', error);
+        res.status(500).json({ success: false, message: 'Gagal menghapus data dari server.' });
+    }
+});
+
+// ======================================
+// 6. LOGIN & DEFAULT ROUTE
+// ======================================
+
+app.post('/api/admin/login', async (req, res) => {
+    const { username, password } = req.body;
+    try {
+        const [rows] = await pool.query('SELECT * FROM admin WHERE username = ? AND password = ?', [username, password]);
+        if (rows.length > 0) {
+            res.json({ success: true, token: 'fake-jwt-token' });
+        } else {
+            res.status(401).json({ message: 'Username atau Password salah' });
+        }
+    } catch (err) { res.status(500).json({ message: err.message }); }
+});
+
 app.get('/', (req, res) => {
     res.send(`Server Express Baso Yen berjalan di port ${PORT}. Status: OK`);
 });
 
-
-// ======================================
-// 6. START SERVER
-// ======================================
-
 app.listen(PORT, () => {
     console.log(`🚀 Server berjalan di http://localhost:${PORT}`);
-    console.log(`   (Pastikan Anda menjalankan database MySQL)`);
 });

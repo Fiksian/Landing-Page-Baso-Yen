@@ -1,32 +1,38 @@
 CREATE DATABASE IF NOT EXISTS Basoyen;
-
 USE Basoyen;
 
--- Skrip SQL untuk membuat tabel yang menampung data dari Formulir Kontak/B2B
--- Nama tabel: permintaan_b2b
+-- 1. Tabel Admin (Untuk Login)
+CREATE TABLE IF NOT EXISTS admin (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL, -- Simpan hash password di sini
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
-CREATE TABLE permintaan_b2b (
-    -- Kolom Identifikasi & Waktu
-    id INT PRIMARY KEY AUTO_INCREMENT, -- ID unik untuk setiap permintaan (Primary Key)
-    tanggal_kirim TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Waktu saat data dimasukkan
+-- 2. Tabel Produk
+CREATE TABLE IF NOT EXISTS products (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    price DECIMAL(12, 2) NOT NULL,         -- Harga final setelah diskon
+    original_price DECIMAL(12, 2) NOT NULL, -- Harga asli sebelum diskon
+    discount INT DEFAULT 0,                 -- Persentase diskon
+    image_url VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
-    -- Data Pribadi & Perusahaan (Input Formulir)
-    nama_lengkap VARCHAR(100) NOT NULL, -- Nama Lengkap pengirim (dari 'Nama Lengkap')
-    nama_perusahaan VARCHAR(150) NOT NULL, -- Nama perusahaan/usaha (dari 'Nama Perusahaan')
-    
-    -- Data Kontak
-    email VARCHAR(100) NOT NULL, -- Alamat email (dari 'Email')
-    whatsapp_number VARCHAR(20) NOT NULL, -- Nomor WhatsApp (dari 'No. WhatsApp')
-
-    -- Detail Bisnis
-    jenis_usaha VARCHAR(50) NOT NULL, -- Jenis usaha (dari 'Jenis Usaha', menggunakan nilai yang dipilih)
-    
-    -- Pesan / Kebutuhan
-    pesan_kebutuhan TEXT NOT NULL, -- Detail kebutuhan produk/pesan (dari 'Pesan / Kebutuhan Produk')
-
-    -- Status Internal (Opsional, untuk melacak proses tindak lanjut)
+-- 3. Tabel B2B (Data Kontak)
+CREATE TABLE IF NOT EXISTS permintaan_b2b (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    tanggal_kirim TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    nama_lengkap VARCHAR(100) NOT NULL,
+    nama_perusahaan VARCHAR(150) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    whatsapp_number VARCHAR(20) NOT NULL,
+    jenis_usaha VARCHAR(50) NOT NULL,
+    pesan_kebutuhan TEXT NOT NULL,
     status_proses ENUM('Baru', 'Diproses', 'Selesai', 'Diabaikan') DEFAULT 'Baru'
 );
 
--- Contoh Indeks (Opsional, untuk mempercepat pencarian)
-CREATE INDEX idx_perusahaan_email ON permintaan_b2b (nama_perusahaan, email);
+-- Insert User Admin Default (Password: admin123 - Harap dihash jika produksi)
+INSERT INTO admin (username, password) VALUES ('admin', 'admin123');
