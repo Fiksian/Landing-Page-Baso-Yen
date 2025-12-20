@@ -85,13 +85,15 @@ const Kontak = () => {
                         <Card className="h-100 shadow-sm">
                             <Card.Body>
                                 <h4 className="fw-bold mb-4">Kontak Perusahaan</h4>
-                                {/* ... (Konten kontak tetap sama) ... */}
                                 <div className="d-flex mb-3">
                                 <MapPin className="text-primary me-3 mt-1" />
                                 <div>
                                     <strong>Alamat</strong>
                                     <div className="text-muted">
-                                    Jl. Contoh Alamat No.123, Bandung, Jawa Barat
+                                    Jl. Pasirkaliki 106 Cicendo, Bandung
+                                    </div>
+				    <div className="text-muted">
+                                    Komp. Puri BKR Kav 61 Regol, Bandung
                                     </div>
                                 </div>
                                 </div>
@@ -100,7 +102,8 @@ const Kontak = () => {
                                 <Phone className="text-primary me-3 mt-1" />
                                 <div>
                                     <strong>Telepon / WhatsApp</strong>
-                                    <div className="text-muted">+62 812-3456-7890</div>
+                                    <div className="text-muted">+62 897-2078-800 (Pasirkaliki)</div>
+				    <div className="text-muted">+62 851-0080-5080 (BKR)</div>
                                 </div>
                                 </div>
 
@@ -117,7 +120,7 @@ const Kontak = () => {
                                 <div>
                                     <strong>Jam Operasional</strong>
                                     <div className="text-muted">
-                                    Senin – Jumat, 08.00 – 17.00 WIB
+                                    Senin – Minggu, 07.00 – 17.00 WIB
                                     </div>
                                 </div>
                                 </div>
